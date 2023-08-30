@@ -5,7 +5,7 @@ const getContacts = (req, res) => {
 };
 
 const createContact = (req, res) => {
-    console.log(`The body of the request is: ${req.body}`);
+    console.log(`The body of the request is: ${JSON.stringify(req.body)}`);
     const { name, email, phone } = req.body;
     if (!name || !email || !phone) {
         return res.status(400).json({
