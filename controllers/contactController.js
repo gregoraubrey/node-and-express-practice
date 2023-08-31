@@ -1,16 +1,18 @@
+const errorHandler = require("../middleware/errorHandler");
+
 const getContacts = (req, res) => {
     res.status(200).json({
         message: 'Get all contacts'
     });
 };
 
-const createContact = (req, res) => {
+const createContact = (req, res, next) => {
     console.log(`The body of the request is: ${JSON.stringify(req.body)}`);
     const { name, email, phone } = req.body;
     if (!name || !email || !phone) {
-        return res.status(400).json({
-            message: 'Please provide a name, email address, and phone number'
-        });
+        const err = new Error('Please provide a name, email address, and phone number');
+        err.statusCode = 400;
+        next(err);
     }
     res.status(201).json({
         message: 'Create new contact'
